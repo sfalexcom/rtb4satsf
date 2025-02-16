@@ -3,7 +3,7 @@
   var BANNER_URL = "https://example.com/banner1.jpg";
   var TARGET_URL = "https://example.com/landing-page";
   // var BANNER_TYPE = "Medium_Rectangle_300_250";
-  // var STATUS = "Medium_Rectangle_300_250";
+  // var STATUS = "on";
   // var PRIORITY = "1";
 
   var banner = document.createElement("div");
