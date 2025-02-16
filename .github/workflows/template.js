@@ -3,15 +3,20 @@
   var BANNER_URL = "{{ BANNER_URL }}";
   var TARGET_URL = "{{ TARGET_URL }}";
   // var BANNER_TYPE = "{{ BANNER_TYPE }}";
-  // var STATUS = "{{ STATUS }}";
+  var STATUS = "{{ STATUS }}".trim().toLowerCase();
   // var PRIORITY = "{{ PRIORITY }}";
 
-  var banner = document.createElement("div");
-  var script = document.currentScript;
-  script.parentElement.insertBefore(banner, script);
+  var isActive =
+    STATUS !== "" && STATUS !== "off" && STATUS !== "false" && STATUS !== "0";
 
-  var link = banner.appendChild(document.createElement("a"));
-  link.href = TARGET_URL;
-  var img = link.appendChild(document.createElement("img"));
-  img.src = BANNER_URL;
+  if (isActive) {
+    var banner = document.createElement("div");
+    var script = document.currentScript;
+    script.parentElement.insertBefore(banner, script);
+
+    var link = banner.appendChild(document.createElement("a"));
+    link.href = TARGET_URL;
+    var img = link.appendChild(document.createElement("img"));
+    img.src = BANNER_URL;
+  }
 })();
