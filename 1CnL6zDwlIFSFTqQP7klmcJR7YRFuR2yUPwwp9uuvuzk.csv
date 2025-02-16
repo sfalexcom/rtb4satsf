@@ -1,0 +1,3 @@
+siteID,bannerURL,targetURL,bannerType,status,priority
+sfalex_com,https://example.com/banner1.jpg,https://example.com/landing-page,Leaderboard_728_90,on,999
+sfalex_com,https://example.com/banner1.jpg,https://example.com/landing-page,Medium_Rectangle_300_250,off,1
