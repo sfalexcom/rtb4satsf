@@ -3,15 +3,20 @@
   var BANNER_URL = "https://bilarika.com/assets/featured.png";
   var TARGET_URL = "https://bilarika.com/";
   // var BANNER_TYPE = "Large_Rectangle_336_280";
-  // var STATUS = "on";
+  var STATUS = "on".trim().toLowerCase();
   // var PRIORITY = "1";
 
-  var banner = document.createElement("div");
-  var script = document.currentScript;
-  script.parentElement.insertBefore(banner, script);
+  var isActive =
+    STATUS !== "" && STATUS !== "off" && STATUS !== "false" && STATUS !== "0";
 
-  var link = banner.appendChild(document.createElement("a"));
-  link.href = TARGET_URL;
-  var img = link.appendChild(document.createElement("img"));
-  img.src = BANNER_URL;
+  if (isActive) {
+    var banner = document.createElement("div");
+    var script = document.currentScript;
+    script.parentElement.insertBefore(banner, script);
+
+    var link = banner.appendChild(document.createElement("a"));
+    link.href = TARGET_URL;
+    var img = link.appendChild(document.createElement("img"));
+    img.src = BANNER_URL;
+  }
 })();
