@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p "data"
           npm install && npm run build
-          rm -rf package.json package-lock.json .gitignore node_modules
+          rm -rf package.json package-lock.json .gitignore node_modules *.xlsx *.csv
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
