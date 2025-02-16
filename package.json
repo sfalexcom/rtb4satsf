@@ -1,0 +1,23 @@
+{
+  "name": "rtb4satsf",
+  "version": "1.0.1",
+  "description": "",
+  "repository": {
+    "url": "git+https://github.com/sfalexcom/rtb4satsf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sfalexcom/rtb4satsf/issues"
+  },
+  "scripts": {
+    "build": "node ./.github/workflows/build.js"
+  },
+  "author": {
+    "name": "Valentin Podkamennyi",
+    "email": "vpodk@users.noreply.github.com",
+    "url": "https://vpodk.com/"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
+  }
+}
