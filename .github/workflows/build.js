@@ -12,13 +12,8 @@ const TEMPLATE = ".github/workflows/template.js";
 const build = (data) => {
   const cwd = path.resolve("./");
   const template = fs.readFileSync(path.join(cwd, TEMPLATE), "utf8");
-
-  try {
-    fs.existsSync(path.join(cwd, "data")) ||
-      fs.mkdirSync(path.join(cwd, "data"));
-  } catch (ex) {
-    console.error("[ERROR] Could not create directory for ", filePath, ex);
-  }
+  const dataPath = path.join(cwd, "data");
+  fs.existsSync(dataPath) || fs.mkdirSync(dataPath);
 
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
@@ -34,17 +29,17 @@ const build = (data) => {
       .replace("{{ BANNER_TYPE }}", row[3])
       .replace("{{ STATUS }}", row[4])
       .replace("{{ PRIORITY }}", row[5]);
-    fs.writeFileSync(path.join(cwd, "data", fileName), content);
+    fs.writeFileSync(path.join(dataPath, fileName), content);
   }
 };
 
 const run = async () => {
-  const localFileName = `${SHEET_ID}.csv`;
+  const fileName = `${SHEET_ID}.csv`;
 
   try {
-    const file = await helper.downloadFile(FILE_URL, localFileName);
+    const file = await helper.downloadFile(FILE_URL, fileName);
     if (file) {
-      const data = helper.readXLSXFile(localFileName);
+      const data = helper.readXLSXFile(fileName);
       if (data && data.length) {
         build(data[0]);
       }
