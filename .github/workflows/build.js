@@ -22,8 +22,11 @@ const build = (data) => {
 
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    console.log(row);
     const siteId = row[0];
+    const bannerType = row[3];
+    const bannerSize = bannerType.split("_").slice(-2).join("x");
+    const fileName = `${siteId}-${bannerSize}.js`;
+
     const content = template
       .replace("{{ SITE_ID }}", siteId)
       .replace("{{ BANNER_URL }}", row[1])
@@ -31,7 +34,7 @@ const build = (data) => {
       .replace("{{ BANNER_TYPE }}", row[3])
       .replace("{{ STATUS }}", row[4])
       .replace("{{ PRIORITY }}", row[5]);
-    fs.writeFileSync(path.join(cwd, "data", `${siteId}.js`), content);
+    fs.writeFileSync(path.join(cwd, "data", fileName), content);
   }
 };
 
