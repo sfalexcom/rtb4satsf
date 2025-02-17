@@ -3,7 +3,7 @@
  * <script src="{{ BASE_URL }}{{ SITE_ID }}-{{ SIZE_ID }}.js" defer async></script>
  */
 
-(function () {
+(function (doc) {
   var BANNERS = {{ BANNERS }};
   var SITE_ID = "{{ SITE_ID }}";
   var SIZE_ID = "{{ SIZE_ID }}";
@@ -13,8 +13,8 @@
   var BANNER_WIDTH = +BANNER_SIZE[0];
   var BANNER_HEIGHT = +BANNER_SIZE[1];
 
-  var banner = document.createElement("div");
-  var script = document.currentScript;
+  var banner = doc.createElement("div");
+  var script = doc.currentScript;
   var ticker = 0;
 
   script.parentElement.insertBefore(banner, script);
@@ -23,7 +23,7 @@
 
   function render(data) {
     banner.firstChild && banner.removeChild(banner.firstChild);
-    var iframe = banner.appendChild(document.createElement("iframe"));
+    var iframe = banner.appendChild(doc.createElement("iframe"));
     iframe.sandbox = "allow-popups allow-popups-to-escape-sandbox";
     iframe.style.border = iframe.frameBorder = 0;
     iframe.style.width = iframe.style.maxWidth = BANNER_WIDTH + "px";
@@ -38,7 +38,7 @@
   function rotate() {
     if (ticker) clearTimeout(ticker)
     var randomBuffer = new Uint32Array(1);
-    window.crypto.getRandomValues(randomBuffer);
+    crypto.getRandomValues(randomBuffer);
     var randomIndex = randomBuffer[0] % BANNERS.length;
     render(BANNERS[randomIndex]);
     ticker = setTimeout(rotate, TIMEOUT);
@@ -46,4 +46,4 @@
 
   rotate();
 
-})();
+})(document);
