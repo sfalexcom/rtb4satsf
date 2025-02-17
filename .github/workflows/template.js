@@ -4,18 +4,16 @@
  */
 
 (function (doc) {
-  var BANNERS = {{ BANNERS }};
-  var SITE_ID = "{{ SITE_ID }}";
-  var SIZE_ID = "{{ SIZE_ID }}";
-  var TIMEOUT = 30 * 1000;
-
-  var BANNER_SIZE = SIZE_ID.split('x');
-  var BANNER_WIDTH = +BANNER_SIZE[0];
-  var BANNER_HEIGHT = +BANNER_SIZE[1];
-
   var IMAGE_URL_INDEX = 0;
   var CLICK_URL_INDEX = 1;
   var VALUATION_INDEX = 2;
+  var RETENTION_INDEX = 3;
+
+  var BANNER_SIZE = "{{ SIZE_ID }}".split('x');
+  var BANNER_WIDTH = +BANNER_SIZE[0];
+  var BANNER_HEIGHT = +BANNER_SIZE[1];
+
+  var BANNERS = {{ BANNERS }};
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
@@ -58,8 +56,10 @@
     crypto.getRandomValues(randomBuffer);
     var weightedArr = weigh(BANNERS);
     var randomIndex = randomBuffer[0] % weightedArr.length;
-    render(weightedArr[randomIndex]);
-    ticker = setTimeout(rotate, TIMEOUT);
+    var row = weightedArr[randomIndex];
+    render(row);
+    var timeout = parseInt(row[RETENTION_INDEX], 10) || 30;
+    ticker = setTimeout(rotate, timeout * 1000);
   }
 
   rotate();

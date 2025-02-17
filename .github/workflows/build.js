@@ -32,7 +32,7 @@ const build = (data) => {
       if (isActive) {
         acc[siteId] ??= {};
         acc[siteId][bannerSize] ??= [];
-        acc[siteId][bannerSize].push([row[1], row[2], row[5]]);
+        acc[siteId][bannerSize].push([row[1], row[2], row[5], row[6]]);
       }
     }
 
