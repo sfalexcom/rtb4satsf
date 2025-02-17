@@ -42,10 +42,10 @@
   function weigh(arr) {
     if (arr.length < 2) return arr;
     var weighted = [];
-    for (let i = 0; i < arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
       var row = arr[i];
       var weight = parseInt(row[VALUATION_INDEX], 10) || 1;
-      for (let j = 0; j < weight; j++) {
+      for (var j = 0; j < weight; j++) {
         weighted.push(row);
       }
     }
