@@ -20,6 +20,7 @@
     banner.removeChild(banner.firstChild);
     var link = banner.appendChild(document.createElement("a"));
     link.href = data[1];
+    link.target = "_blank";
     var img = link.appendChild(document.createElement("img"));
     img.src = data[0];
     img.width = BANNER_WIDTH;
