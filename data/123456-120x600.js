@@ -15,14 +15,14 @@
 
   var banner = document.createElement("div");
   var script = document.currentScript;
-  var BANNER_SIZE = SIZE_ID.split('x');
+  var timeout = 0;
 
   script.parentElement.insertBefore(banner, script);
   banner.style.width = banner.style.maxWidth = BANNER_WIDTH + 'px';
   banner.style.height = banner.style.maxHeight = BANNER_HEIGHT + 'px';
 
   function render(data) {
-    banner.removeChild(banner.firstChild);
+    banner.firstChild && banner.removeChild(banner.firstChild);
     var link = banner.appendChild(document.createElement("a"));
     link.href = data[1];
     link.target = "_blank";
@@ -34,11 +34,14 @@
   }
 
   function rotate() {
+    if (timeout) clearTimeout(timeout)
     var randomBuffer = new Uint32Array(1);
     window.crypto.getRandomValues(randomBuffer);
     var randomIndex = randomBuffer[0] % BANNERS.length;
     render(BANNERS[randomIndex]);
+    timeout = setTimeout(rotate, TIMEOUT);
   }
 
-  setInterval(rotate, TIMEOUT);
+  rotate();
+
 })();
