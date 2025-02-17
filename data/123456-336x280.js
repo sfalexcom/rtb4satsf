@@ -1,22 +1,31 @@
 (function () {
-  // var SITE_ID = "123456";
-  var BANNER_URL = "https://bilarika.com/assets/featured.png";
-  var TARGET_URL = "https://bilarika.com/";
-  // var BANNER_TYPE = "Large_Rectangle_336_280";
-  var STATUS = "on".trim().toLowerCase();
-  // var PRIORITY = "1";
+  var BANNERS = [["https://bilarika.com/assets/featured.png","https://bilarika.com/","1"],["https://bilarika.com/assets/keyboard.jpg","https://bilarika.com/","1"],["https://bilarika.com/assets/map.png","https://bilarika.com/","1"]];
+  var SITE_ID = "123456";
+  var SIZE_ID = "336x280";
+  var TIMEOUT = 30 * 1000;
 
-  var isActive =
-    STATUS !== "" && STATUS !== "off" && STATUS !== "false" && STATUS !== "0";
+  var banner = document.createElement("div");
+  var script = document.currentScript;
+  var format = SIZE_ID.split('x');
 
-  if (isActive) {
-    var banner = document.createElement("div");
-    var script = document.currentScript;
-    script.parentElement.insertBefore(banner, script);
+  script.parentElement.insertBefore(banner, script);
+  banner.style.width = banner.style.maxWidth = format[0] + 'px';
+  banner.style.height = banner.style.maxHeight = format[1] + 'px';
 
+  function render(data) {
+    banner.removeChild(banner.firstChild);
     var link = banner.appendChild(document.createElement("a"));
-    link.href = TARGET_URL;
+    link.href = data[1];
     var img = link.appendChild(document.createElement("img"));
-    img.src = BANNER_URL;
+    img.src = data[0];
   }
+
+  function rotate() {
+    var randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    var randomIndex = randomBuffer[0] % BANNERS.length;
+    render(BANNERS[randomIndex]);
+  }
+
+  setInterval(rotate, TIMEOUT);
 })();

@@ -1,22 +1,31 @@
 (function () {
-  // var SITE_ID = "sfalex_com";
-  var BANNER_URL = "https://example.com/banner1.jpg";
-  var TARGET_URL = "https://example.com/landing-page";
-  // var BANNER_TYPE = "Medium_Rectangle_300_250";
-  var STATUS = "on".trim().toLowerCase();
-  // var PRIORITY = "1";
+  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","1"]];
+  var SITE_ID = "sfalex_com";
+  var SIZE_ID = "300x250";
+  var TIMEOUT = 30 * 1000;
 
-  var isActive =
-    STATUS !== "" && STATUS !== "off" && STATUS !== "false" && STATUS !== "0";
+  var banner = document.createElement("div");
+  var script = document.currentScript;
+  var format = SIZE_ID.split('x');
 
-  if (isActive) {
-    var banner = document.createElement("div");
-    var script = document.currentScript;
-    script.parentElement.insertBefore(banner, script);
+  script.parentElement.insertBefore(banner, script);
+  banner.style.width = banner.style.maxWidth = format[0] + 'px';
+  banner.style.height = banner.style.maxHeight = format[1] + 'px';
 
+  function render(data) {
+    banner.removeChild(banner.firstChild);
     var link = banner.appendChild(document.createElement("a"));
-    link.href = TARGET_URL;
+    link.href = data[1];
     var img = link.appendChild(document.createElement("img"));
-    img.src = BANNER_URL;
+    img.src = data[0];
   }
+
+  function rotate() {
+    var randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    var randomIndex = randomBuffer[0] % BANNERS.length;
+    render(BANNERS[randomIndex]);
+  }
+
+  setInterval(rotate, TIMEOUT);
 })();

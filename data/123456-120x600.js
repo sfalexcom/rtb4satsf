@@ -1,7 +1,7 @@
 (function () {
-  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","999"]];
-  var SITE_ID = "sfalex_com";
-  var SIZE_ID = "728x90";
+  var BANNERS = [["https://bilarika.com/assets/mobile.png","https://bilarika.com/","1"]];
+  var SITE_ID = "123456";
+  var SIZE_ID = "120x600";
   var TIMEOUT = 30 * 1000;
 
   var banner = document.createElement("div");
