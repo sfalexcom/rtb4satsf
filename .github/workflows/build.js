@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const helper = require("./helper");
 
+const BASE_URL = "https://sf.satsf.com/data/";
 const SHEET_ID = "1CnL6zDwlIFSFTqQP7klmcJR7YRFuR2yUPwwp9uuvuzk"; // Public URL
 const FILE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 const TEMPLATE = ".github/workflows/template.js";
@@ -37,9 +38,10 @@ const build = (data) => {
     for (const [sizeId, banners] of Object.entries(sizes)) {
       const fileName = `${siteId}-${sizeId}.js`;
       const content = template
-        .replace("{{ SITE_ID }}", siteId)
-        .replace("{{ SIZE_ID }}", sizeId)
-        .replace("{{ BANNERS }}", JSON.stringify(banners));
+        .replaceAll("{{ SITE_ID }}", siteId)
+        .replaceAll("{{ SIZE_ID }}", sizeId)
+        .replaceAll("{{ BASE_URL }}", BASE_URL)
+        .replaceAll("{{ BANNERS }}", JSON.stringify(banners));
       fs.writeFileSync(path.join(dataPath, fileName), content);
     }
   }

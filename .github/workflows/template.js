@@ -1,3 +1,8 @@
+/**
+ * Embed the following code snippet in web pages at the places where the banner should appear:
+ * <script src="{{ BASE_URL }}{{ SITE_ID }}-{{ SIZE_ID }}.js"><script>
+ */
+
 (function () {
   var BANNERS = {{ BANNERS }};
   var SITE_ID = "{{ SITE_ID }}";
@@ -23,6 +28,7 @@
     link.target = "_blank";
     var img = link.appendChild(document.createElement("img"));
     img.src = data[0];
+    img.loading = "lazy";
     img.width = BANNER_WIDTH;
     img.height = BANNER_HEIGHT;
   }
