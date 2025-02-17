@@ -1,3 +1,8 @@
+/**
+ * Embed the following code snippet in web pages at the places where the banner should appear:
+ * <script src="https://sf.satsf.com/data/sfalex_com-300x250.js"><script>
+ */
+
 (function () {
   var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","1"]];
   var SITE_ID = "sfalex_com";
@@ -23,6 +28,7 @@
     link.target = "_blank";
     var img = link.appendChild(document.createElement("img"));
     img.src = data[0];
+    img.loading = "lazy";
     img.width = BANNER_WIDTH;
     img.height = BANNER_HEIGHT;
   }

@@ -1,3 +1,8 @@
+/**
+ * Embed the following code snippet in web pages at the places where the banner should appear:
+ * <script src="https://sf.satsf.com/data/123456-336x280.js"><script>
+ */
+
 (function () {
   var BANNERS = [["https://bilarika.com/assets/featured.png","https://bilarika.com/","1"],["https://bilarika.com/assets/keyboard.jpg","https://bilarika.com/","1"],["https://bilarika.com/assets/map.png","https://bilarika.com/","1"]];
   var SITE_ID = "123456";
@@ -23,6 +28,7 @@
     link.target = "_blank";
     var img = link.appendChild(document.createElement("img"));
     img.src = data[0];
+    img.loading = "lazy";
     img.width = BANNER_WIDTH;
     img.height = BANNER_HEIGHT;
   }
