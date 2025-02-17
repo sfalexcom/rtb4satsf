@@ -1,22 +1,31 @@
 (function () {
-  // var SITE_ID = "{{ SITE_ID }}";
-  var BANNER_URL = "{{ BANNER_URL }}";
-  var TARGET_URL = "{{ TARGET_URL }}";
-  // var BANNER_TYPE = "{{ BANNER_TYPE }}";
-  var STATUS = "{{ STATUS }}".trim().toLowerCase();
-  // var PRIORITY = "{{ PRIORITY }}";
+  var BANNERS = {{ BANNERS }};
+  var SITE_ID = "{{ SITE_ID }}";
+  var SIZE_ID = "{{ SIZE_ID }}";
+  var TIMEOUT = 30 * 1000;
 
-  var isActive =
-    STATUS !== "" && STATUS !== "off" && STATUS !== "false" && STATUS !== "0";
+  var banner = document.createElement("div");
+  var script = document.currentScript;
+  var format = SIZE_ID.split('x');
 
-  if (isActive) {
-    var banner = document.createElement("div");
-    var script = document.currentScript;
-    script.parentElement.insertBefore(banner, script);
+  script.parentElement.insertBefore(banner, script);
+  banner.style.width = banner.style.maxWidth = format[0] + 'px';
+  banner.style.height = banner.style.maxHeight = format[1] + 'px';
 
+  function render(data) {
+    banner.removeChild(banner.firstChild);
     var link = banner.appendChild(document.createElement("a"));
-    link.href = TARGET_URL;
+    link.href = data[1];
     var img = link.appendChild(document.createElement("img"));
-    img.src = BANNER_URL;
+    img.src = data[0];
   }
+
+  function rotate() {
+    var randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    var randomIndex = randomBuffer[0] % BANNERS.length;
+    render(BANNERS[randomIndex]);
+  }
+
+  setInterval(rotate, TIMEOUT);
 })();

@@ -15,21 +15,33 @@ const build = (data) => {
   const dataPath = path.join(cwd, "data");
   fs.existsSync(dataPath) || fs.mkdirSync(dataPath);
 
-  for (let i = 1; i < data.length; i++) {
-    const row = data[i];
+  const map = data.slice(1).reduce((acc, row) => {
     const siteId = row[0];
     const bannerType = row[3];
     const bannerSize = bannerType.split("_").slice(-2).join("x");
-    const fileName = `${siteId}-${bannerSize}.js`;
+    const status = (row[4] || "").trim().toLowerCase();
 
-    const content = template
-      .replace("{{ SITE_ID }}", siteId)
-      .replace("{{ BANNER_URL }}", row[1])
-      .replace("{{ TARGET_URL }}", row[2])
-      .replace("{{ BANNER_TYPE }}", row[3])
-      .replace("{{ STATUS }}", row[4])
-      .replace("{{ PRIORITY }}", row[5]);
-    fs.writeFileSync(path.join(dataPath, fileName), content);
+    var isActive =
+      status !== "" && status !== "off" && status !== "false" && status !== "0";
+
+    if (isActive) {
+      acc[siteId] ??= {};
+      acc[siteId][bannerSize] ??= [];
+      acc[siteId][bannerSize].push([row[1], row[2], row[5]]);
+    }
+
+    return acc;
+  }, {});
+
+  for (const [siteId, sizes] of Object.entries(map)) {
+    for (const [sizeId, banners] of Object.entries(sizes)) {
+      const fileName = `${siteId}-${sizeId}.js`;
+      const content = template
+        .replace("{{ SITE_ID }}", siteId)
+        .replace("{{ SIZE_ID }}", sizeId)
+        .replace("{{ BANNERS }}", JSON.stringify(banners));
+      fs.writeFileSync(path.join(dataPath, fileName), content);
+    }
   }
 };
 
