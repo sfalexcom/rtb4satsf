@@ -4,7 +4,7 @@
  */
 
 (function (doc) {
-  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","999"]];
+  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","8"]];
   var SITE_ID = "sfalex_com";
   var SIZE_ID = "728x90";
   var TIMEOUT = 30 * 1000;
@@ -12,6 +12,10 @@
   var BANNER_SIZE = SIZE_ID.split('x');
   var BANNER_WIDTH = +BANNER_SIZE[0];
   var BANNER_HEIGHT = +BANNER_SIZE[1];
+
+  var IMAGE_URL_INDEX = 0;
+  var CLICK_URL_INDEX = 1;
+  var VALUATION_INDEX = 2;
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
@@ -31,16 +35,30 @@
     iframe.srcdoc = [
       "<!doctype html>",
       "<style>html,body{margin:0;overflow:hidden;padding:0}a{display:block}</style>",
-      `<a target="_blank" href="${data[1]}"><img src="${data[0]}" width="${BANNER_WIDTH}" height="${BANNER_HEIGHT}" loading="lazy"></a>`,
+      `<a target="_blank" href="${data[CLICK_URL_INDEX]}"><img src="${data[IMAGE_URL_INDEX]}" width="${BANNER_WIDTH}" height="${BANNER_HEIGHT}" loading="lazy"></a>`,
     ].join("");
+  }
+
+  function weigh(arr) {
+    if (arr.length < 2) return arr;
+    var weighted = [];
+    for (let i = 0; i < arr.length; i++) {
+      var row = arr[i];
+      var weight = parseInt(row[VALUATION_INDEX], 10) || 1;
+      for (let j = 0; j < weight; j++) {
+        weighted.push(row);
+      }
+    }
+    return weighted;
   }
 
   function rotate() {
     if (ticker) clearTimeout(ticker)
     var randomBuffer = new Uint32Array(1);
     crypto.getRandomValues(randomBuffer);
-    var randomIndex = randomBuffer[0] % BANNERS.length;
-    render(BANNERS[randomIndex]);
+    var weightedArr = weigh(BANNERS);
+    var randomIndex = randomBuffer[0] % weightedArr.length;
+    render(weightedArr[randomIndex]);
     ticker = setTimeout(rotate, TIMEOUT);
   }
 
