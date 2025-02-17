@@ -36,6 +36,7 @@ jobs:
         uses: nizarmah/auto-minify@v3.0.0
         with:
           directory: "data"
+          overwrite: true
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
