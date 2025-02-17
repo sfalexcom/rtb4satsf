@@ -23,14 +23,16 @@
 
   function render(data) {
     banner.firstChild && banner.removeChild(banner.firstChild);
-    var link = banner.appendChild(document.createElement("a"));
-    link.href = data[1];
-    link.target = "_blank";
-    var img = link.appendChild(document.createElement("img"));
-    img.src = data[0];
-    img.loading = "lazy";
-    img.width = BANNER_WIDTH;
-    img.height = BANNER_HEIGHT;
+    var iframe = banner.appendChild(document.createElement("iframe"));
+    iframe.sandbox = "allow-popups allow-popups-to-escape-sandbox";
+    iframe.style.border = iframe.frameBorder = 0;
+    iframe.style.width = iframe.style.maxWidth = BANNER_WIDTH + "px";
+    iframe.style.height = iframe.style.maxHeight = BANNER_HEIGHT + "px";
+    iframe.srcdoc = [
+      "<!doctype html>",
+      "<style>html,body{margin:0;overflow:hidden;padding:0}a{display:block}</style>",
+      `<a target="_blank" href="${data[1]}"><img src="${data[0]}" width="${BANNER_WIDTH}" height="${BANNER_HEIGHT}" loading="lazy""></a>`,
+    ].join("");
   }
 
   function rotate() {
