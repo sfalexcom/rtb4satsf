@@ -15,7 +15,7 @@
 
   var banner = document.createElement("div");
   var script = document.currentScript;
-  var timeout = 0;
+  var ticker = 0;
 
   script.parentElement.insertBefore(banner, script);
   banner.style.width = banner.style.maxWidth = BANNER_WIDTH + 'px';
@@ -34,12 +34,12 @@
   }
 
   function rotate() {
-    if (timeout) clearTimeout(timeout)
+    if (ticker) clearTimeout(ticker)
     var randomBuffer = new Uint32Array(1);
     window.crypto.getRandomValues(randomBuffer);
     var randomIndex = randomBuffer[0] % BANNERS.length;
     render(BANNERS[randomIndex]);
-    timeout = setTimeout(rotate, TIMEOUT);
+    ticker = setTimeout(rotate, TIMEOUT);
   }
 
   rotate();
