@@ -4,18 +4,16 @@
  */
 
 (function (doc) {
-  var BANNERS = [["https://bilarika.com/assets/featured.png","https://bilarika.com/","1"],["https://bilarika.com/assets/keyboard.jpg","https://bilarika.com/","4"],["https://bilarika.com/assets/map.png","https://bilarika.com/","1"]];
-  var SITE_ID = "123456";
-  var SIZE_ID = "336x280";
-  var TIMEOUT = 30 * 1000;
-
-  var BANNER_SIZE = SIZE_ID.split('x');
-  var BANNER_WIDTH = +BANNER_SIZE[0];
-  var BANNER_HEIGHT = +BANNER_SIZE[1];
-
   var IMAGE_URL_INDEX = 0;
   var CLICK_URL_INDEX = 1;
   var VALUATION_INDEX = 2;
+  var RETENTION_INDEX = 3;
+
+  var BANNER_SIZE = "336x280".split('x');
+  var BANNER_WIDTH = +BANNER_SIZE[0];
+  var BANNER_HEIGHT = +BANNER_SIZE[1];
+
+  var BANNERS = [["https://bilarika.com/assets/featured.png","https://bilarika.com/","1","30"],["https://bilarika.com/assets/keyboard.jpg","https://bilarika.com/","4","30"],["https://bilarika.com/assets/map.png","https://bilarika.com/","1","30"]];
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
@@ -58,8 +56,10 @@
     crypto.getRandomValues(randomBuffer);
     var weightedArr = weigh(BANNERS);
     var randomIndex = randomBuffer[0] % weightedArr.length;
-    render(weightedArr[randomIndex]);
-    ticker = setTimeout(rotate, TIMEOUT);
+    var row = weightedArr[randomIndex];
+    render(row);
+    var timeout = parseInt(row[RETENTION_INDEX], 10) || 30;
+    ticker = setTimeout(rotate, timeout * 1000);
   }
 
   rotate();
