@@ -1,6 +1,6 @@
 /**
  * Embed the following code snippet in web pages at the places where the banner should appear:
- * <script src="https://sf.satsf.com/data/123456-120x600.js" defer async></script>
+ * <script src="https://sf.satsf.com/data/6174-336x280.js" defer async></script>
  */
 
 (function (doc) {
@@ -9,11 +9,11 @@
   var VALUATION_INDEX = 2;
   var RETENTION_INDEX = 3;
 
-  var BANNER_SIZE = "120x600".split('x');
+  var BANNER_SIZE = "336x280".split('x');
   var BANNER_WIDTH = +BANNER_SIZE[0];
   var BANNER_HEIGHT = +BANNER_SIZE[1];
 
-  var BANNERS = [["https://bilarika.com/assets/mobile.png","https://bilarika.com/","1","30"]];
+  var BANNERS = [["https://bilarika.com/assets/featured.png","https://bilarika.com/","1","30"],["https://bilarika.com/assets/keyboard.jpg","https://bilarika.com/","4","30"],["https://bilarika.com/assets/map.png","https://bilarika.com/","1","30"]];
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
