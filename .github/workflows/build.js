@@ -18,17 +18,22 @@ const build = (data) => {
 
   const map = data.slice(1).reduce((acc, row) => {
     const siteId = row[0];
-    const bannerType = row[3];
-    const bannerSize = bannerType.split("_").slice(-2).join("x");
-    const status = (row[4] || "").trim().toLowerCase();
+    if (siteId) {
+      const bannerType = row[3];
+      const bannerSize = bannerType.split("_").slice(-2).join("x");
+      const status = (row[4] || "").trim().toLowerCase();
 
-    var isActive =
-      status !== "" && status !== "off" && status !== "false" && status !== "0";
+      var isActive =
+        status !== "" &&
+        status !== "off" &&
+        status !== "false" &&
+        status !== "0";
 
-    if (isActive) {
-      acc[siteId] ??= {};
-      acc[siteId][bannerSize] ??= [];
-      acc[siteId][bannerSize].push([row[1], row[2], row[5]]);
+      if (isActive) {
+        acc[siteId] ??= {};
+        acc[siteId][bannerSize] ??= [];
+        acc[siteId][bannerSize].push([row[1], row[2], row[5]]);
+      }
     }
 
     return acc;
