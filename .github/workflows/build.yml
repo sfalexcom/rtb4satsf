@@ -26,11 +26,14 @@ jobs:
         with:
           node-version: 20
 
+      - run: npm install -g terser
+
       - name: Install and Build 🔧
         run: |
           mkdir -p "data"
           npm install && npm run build
           rm -rf package.json package-lock.json .gitignore node_modules *.xlsx *.csv
+          for i in ./data/*.js; do terser $i --compress -o $i; done
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
