@@ -17,13 +17,14 @@ const build = (data) => {
   fs.existsSync(dataPath) || fs.mkdirSync(dataPath);
 
   const map = data.slice(1).reduce((acc, row) => {
+    // Row: [ 0:siteId, 1:bannerURL, 2:targetURL, 3:bannerType, 4:status, 5:priority, 6:rotationDelay ]
     const siteId = row[0];
     if (siteId) {
       const bannerType = row[3];
       const bannerSize = bannerType.split("_").slice(-2).join("x");
       const status = (row[4] || "").trim().toLowerCase();
 
-      var isActive =
+      const isActive =
         status !== "" &&
         status !== "off" &&
         status !== "false" &&
