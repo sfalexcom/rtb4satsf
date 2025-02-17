@@ -9,18 +9,7 @@ const BASE_URL = "https://sf.satsf.com/data/";
 const SHEET_ID = "1CnL6zDwlIFSFTqQP7klmcJR7YRFuR2yUPwwp9uuvuzk"; // Public URL
 const FILE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 const TEMPLATE = ".github/workflows/template.js";
-
-const isActive = (/** @type {string} */ status) => {
-  status = (status || "").trim().toLowerCase();
-  return (
-    status !== "" &&
-    status !== "0" &&
-    status !== "off" &&
-    status !== "none" &&
-    status !== "null" &&
-    status !== "false"
-  );
-};
+const INACTIVE = new Set(["", "0", "off", "none", "null", "false"]);
 
 const reduce = (/** @type {string[][]} */ data) =>
   data.reduce((registry, row) => {
@@ -29,8 +18,9 @@ const reduce = (/** @type {string[][]} */ data) =>
     const bannerURL = row[1];
     const targetURL = row[2];
     const bannerType = row[3];
+    const isActive = !INACTIVE.has((row[4] || "").trim().toLowerCase());
 
-    if (siteId && bannerURL && targetURL && bannerType && isActive(row[4])) {
+    if (siteId && bannerURL && targetURL && bannerType && isActive) {
       const bannerSize = bannerType.split("_").slice(-2).join("x");
       registry[siteId] ??= {};
       registry[siteId][bannerSize] ??= [];
