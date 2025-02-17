@@ -1,6 +1,6 @@
 /**
  * Embed the following code snippet in web pages at the places where the banner should appear:
- * <script src="https://sf.satsf.com/data/123456-120x600.js"></script>
+ * <script src="https://sf.satsf.com/data/123456-120x600.js" defer async></script>
  */
 
 (function () {
