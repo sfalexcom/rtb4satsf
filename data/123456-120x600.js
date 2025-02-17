@@ -4,13 +4,17 @@
   var SIZE_ID = "120x600";
   var TIMEOUT = 30 * 1000;
 
+  var BANNER_SIZE = SIZE_ID.split('x');
+  var BANNER_WIDTH = +BANNER_SIZE[0];
+  var BANNER_HEIGHT = +BANNER_SIZE[1];
+
   var banner = document.createElement("div");
   var script = document.currentScript;
-  var format = SIZE_ID.split('x');
+  var BANNER_SIZE = SIZE_ID.split('x');
 
   script.parentElement.insertBefore(banner, script);
-  banner.style.width = banner.style.maxWidth = format[0] + 'px';
-  banner.style.height = banner.style.maxHeight = format[1] + 'px';
+  banner.style.width = banner.style.maxWidth = BANNER_WIDTH + 'px';
+  banner.style.height = banner.style.maxHeight = BANNER_HEIGHT + 'px';
 
   function render(data) {
     banner.removeChild(banner.firstChild);
@@ -18,6 +22,8 @@
     link.href = data[1];
     var img = link.appendChild(document.createElement("img"));
     img.src = data[0];
+    img.width = BANNER_WIDTH;
+    img.height = BANNER_HEIGHT;
   }
 
   function rotate() {
