@@ -1,6 +1,6 @@
 /**
  * Embed the following code snippet in web pages at the places where the banner should appear:
- * <script src="https://sf.satsf.com/data/sfalex_com-300x250.js" defer async></script>
+ * <script src="https://sf.satsf.com/data/6176-728x90.js" defer async></script>
  */
 
 (function (doc) {
@@ -9,11 +9,11 @@
   var VALUATION_INDEX = 2;
   var RETENTION_INDEX = 3;
 
-  var BANNER_SIZE = "300x250".split('x');
+  var BANNER_SIZE = "728x90".split('x');
   var BANNER_WIDTH = +BANNER_SIZE[0];
   var BANNER_HEIGHT = +BANNER_SIZE[1];
 
-  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","1","30"]];
+  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","8","30"]];
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
