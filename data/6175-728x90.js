@@ -13,7 +13,7 @@
   var BANNER_WIDTH = +BANNER_SIZE[0];
   var BANNER_HEIGHT = +BANNER_SIZE[1];
 
-  var BANNERS = [["https://example.com/banner1.jpg","https://example.com/landing-page","8","30"]];
+  var BANNERS = [["https://theonlineadvertisingguide.com/ad-size-guide/728x90/","https://theonlineadvertisingguide.com/wp-content/uploads/2013/08/728x90.jpg","8","30"]];
 
   var banner = doc.createElement("div");
   var script = doc.currentScript;
