@@ -31,7 +31,7 @@
     iframe.srcdoc = [
       "<!doctype html>",
       "<style>html,body{margin:0;overflow:hidden;padding:0}a{display:block}</style>",
-      `<a target="_blank" href="${data[1]}"><img src="${data[0]}" width="${BANNER_WIDTH}" height="${BANNER_HEIGHT}" loading="lazy""></a>`,
+      `<a target="_blank" href="${data[1]}"><img src="${data[0]}" width="${BANNER_WIDTH}" height="${BANNER_HEIGHT}" loading="lazy"></a>`,
     ].join("");
   }
 
