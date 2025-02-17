@@ -10,38 +10,41 @@ const SHEET_ID = "1CnL6zDwlIFSFTqQP7klmcJR7YRFuR2yUPwwp9uuvuzk"; // Public URL
 const FILE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 const TEMPLATE = ".github/workflows/template.js";
 
-const reduce = (data) =>
-  data.reduce((acc, row) => {
+const isActive = (/** @type {string} */ status) => {
+  status = (status || "").trim().toLowerCase();
+  return (
+    status !== "" &&
+    status !== "0" &&
+    status !== "off" &&
+    status !== "none" &&
+    status !== "null" &&
+    status !== "false"
+  );
+};
+
+const reduce = (/** @type {string[][]} */ data) =>
+  data.reduce((registry, row) => {
     // Row: [ 0:siteId, 1:bannerURL, 2:targetURL, 3:bannerType, 4:status, 5:priority, 6:rotationDelay ]
     const siteId = row[0];
-    if (siteId) {
-      const bannerType = row[3];
+    const bannerURL = row[1];
+    const targetURL = row[2];
+    const bannerType = row[3];
+
+    if (siteId && bannerURL && targetURL && bannerType && isActive(row[4])) {
       const bannerSize = bannerType.split("_").slice(-2).join("x");
-      const status = (row[4] || "").trim().toLowerCase();
-
-      const isActive =
-        status !== "" &&
-        status !== "0" &&
-        status !== "off" &&
-        status !== "none" &&
-        status !== "null" &&
-        status !== "false";
-
-      if (isActive) {
-        acc[siteId] ??= {};
-        acc[siteId][bannerSize] ??= [];
-        acc[siteId][bannerSize].push([row[1], row[2], row[5], row[6]]);
-      }
+      registry[siteId] ??= {};
+      registry[siteId][bannerSize] ??= [];
+      registry[siteId][bannerSize].push([bannerURL, targetURL, row[5], row[6]]);
     }
 
-    return acc;
+    return registry;
   }, {});
 
-const build = (data) => {
+const build = (/** @type {string[][]} */ data) => {
   const cwd = path.resolve("./");
   const template = fs.readFileSync(path.join(cwd, TEMPLATE), "utf8");
   const dataPath = path.join(cwd, "data");
-  const registry = reduce(data.slice(1));
+  const registry = reduce(data.slice(1)); // Slice the first (headers) row.
   fs.existsSync(dataPath) || fs.mkdirSync(dataPath);
 
   for (const [siteId, sizes] of Object.entries(registry)) {
@@ -73,6 +76,4 @@ const run = async () => {
   }
 };
 
-// (async () => {
 run();
-// })();
